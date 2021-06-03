@@ -1,0 +1,44 @@
+version: '3.1'
+
+services:
+
+    db:
+        image: postgres
+        restart: unless-stopped
+        volumes:
+            - ./database/main.sql:/docker-entrypoint-initdb.d/init.sql
+        environment:
+            POSTGRES_USER: gameshow
+            POSTGRES_PASSWORD: arefun 
+            POSTGRES_DB: scores 
+
+    api:
+        build: 
+            context: ./backend
+        restart: unless-stopped
+        volumes:
+            - ./backend/code:/code
+        environment:
+            POSTGRES_USER: gameshow 
+            POSTGRES_PASSWORD: arefun 
+            POSTGRES_DB: scores 
+    
+    adminer:
+        image: adminer
+        restart: unless-stopped
+        ports:
+            - 8080:8080
+        
+    caddy:
+        image: caddy:2.0.0-alpine
+        ports:
+            - 80:80
+            - 443:443
+        user: root
+        volumes:
+            - ./static:/static
+            - ./Caddyfile:/etc/caddy/Caddyfile
+            - ./certs/config:/root/.config/caddy
+            - ./certs/local:/root/.local/share/caddy
+            - ./certs/data:/data
+            - ./certs/local-config:/config

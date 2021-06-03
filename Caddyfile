@@ -1,0 +1,11 @@
+#{
+#	acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+#}
+
+localhost {
+	encode gzip
+	file_server {
+		root /static/	
+	}
+	reverse_proxy /api/* api:3000
+}
