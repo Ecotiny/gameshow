@@ -16,6 +16,16 @@ function getscores() {
 
 function update() {
     getscores().then((data) => {
+        newdata = ["Omimi", "Aoraki", "Clayton", "Toroa"]
+        data.forEach(el => {
+            index = newdata.indexOf(el.partyname)
+            if (index >= 0) {
+                newdata[index] = el
+            } else {
+                alert("Please specify the order correctly")
+            }
+        })
+        data = newdata
         scores = data.map(el => el.score)
         names = data.map(el => el.partyname)
         colours = data.map(el => {
@@ -45,7 +55,6 @@ function update() {
         // refresh
         chart.data = data;
         top_of_chart = Math.floor(Math.max(...scores) + 50)
-        console.log(top_of_chart)
         chart.options.scales.yAxes[0].ticks.max = top_of_chart;
         chart.update();
     });
@@ -97,9 +106,10 @@ $(document).ready(() => {
     }
     Chart.plugins.register(ChartDataLabels);
     Chart.defaults.global.defaultFontSize = 20;
+    Chart.defaults.global.animation.duration = 0;
     chart = new Chart(
         document.getElementById('scores'),
         config
     );
-    setTimeout(update, 1000);
+    setInterval(update, 1000);
 });

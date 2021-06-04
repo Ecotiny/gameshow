@@ -27,18 +27,18 @@ class DBManager:
         return self.cursor.fetchall()
 
     def update_score(self, partyname, score):
-        sql = "UPDATE scores SET score = ? WHERE partyname = ?;"
-        self.cursor.execute(sql)
+        sql = "UPDATE scores SET score = %s WHERE partyname = %s;"
+        self.cursor.execute(sql, (score, partyname))
         return True
 
     def remove_party(self, partyname):
-        sql = "DELETE FROM scores WHERE partyname = ?;"
-        self.cursor.execute(sql)
+        sql = "DELETE FROM scores WHERE partyname = %s;"
+        self.cursor.execute(sql, (partyname,))
         return True
 
     def add_party(self, partyname):
-        sql = "INSERT INTO scores (score, partyname) VALUES (0,?);"
-        self.cursor.execute(sql)
+        sql = "INSERT INTO scores (score, partyname) VALUES (0,%s);"
+        self.cursor.execute(sql, (partyname,))
         return True
 
 server = Flask(__name__)
