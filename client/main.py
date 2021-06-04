@@ -1,7 +1,7 @@
 import requests
 
-API_ROOT = "https://gameshow.nsn.nz/api/"
-VERIFY = True 
+API_ROOT = 'https://localhost/api'#"https://gameshow.nsn.nz/api/"
+VERIFY = False 
 
 cmds = ['add', 'del']
 scores = []
@@ -35,7 +35,6 @@ def add_points(partyname, amount):
         'value': newscore
     }
     r = requests.put(API_ROOT + '/score', json=data, verify=VERIFY)
-    print(r.content)
     if r.json()['success']:
         return True 
     else:
@@ -108,4 +107,5 @@ if __name__ == "__main__":
             break
         else:
             cli_parse(instr)
+            scores = get_info()
 

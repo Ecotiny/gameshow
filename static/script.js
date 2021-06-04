@@ -80,7 +80,16 @@ $(document).ready(() => {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        min: 0
+                        min: 0,
+                        fontColor: '#fff',
+                    },
+                    gridLines: {
+                        color: '#666666'
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: '#fff'
                     }
                 }]
             },
@@ -97,7 +106,7 @@ $(document).ready(() => {
             plugins: {
                 datalabels: {
                     display: true,
-                    color: "#36A2EB",
+                    color: "#eeeeee",
                     anchor: 'end',
                     align: 'top',
                 }
@@ -105,7 +114,7 @@ $(document).ready(() => {
         },
     }
     Chart.plugins.register(ChartDataLabels);
-    Chart.defaults.global.defaultFontSize = 20;
+    Chart.defaults.global.defaultFontSize = 25;
     Chart.defaults.global.animation.duration = 0;
     chart = new Chart(
         document.getElementById('scores'),
